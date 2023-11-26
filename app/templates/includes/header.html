@@ -1,0 +1,46 @@
+{% load static %}
+<header>
+
+    <nav class="navbar navbar-light" style="background-color: rgba(136,177,203,0.53)">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'core:test_list' %}">
+          <img src="{% static 'img/icon.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
+          <span style="color:#3946e7">Tester</span>
+        </a>
+        {% with request.resolver_match.view_name as view_name %}  
+        <ul class="nav nav-pills">
+
+          {% if user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'core:result_list' %}">
+                Все результаты
+            </a>
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link link-light" href="{% url 'logout' %}">
+                Выйти
+            </a>
+          </li>
+          <li>
+            Пользователь: {{ user.username }}
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link link-light" href="{% url 'login' %}">
+                Войти
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link link-light {% if view_name  == 'registration' %}active{% endif %}"
+            href="{% url 'registration' %}"
+            >
+            Регистрация
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+        {% endwith %}
+      </div>
+    </nav>      
+  </header>

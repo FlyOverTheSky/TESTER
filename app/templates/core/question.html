@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% block content %}
+    {% if question.is_active %}
+    <article>
+      <ul>
+        <li>
+          Название: {{ question.text }}
+          <br>
+        </li>
+    <ul>
+    <form method="post">
+        {% csrf_token %}
+        {% for choice in choices_form.fields.choices_fields  %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label><br />
+        {% endfor %}
+        <button class="add" role="button" type="submit">
+            <span style="right: -20%;">Ответить</span>
+        </button>
+    </form>
+    </ul>
+    </ul>
+    </article>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endif %}
+    {% if test.id|get_previous_question:question.id %}
+        <a href="{% url 'core:questions' test.id test.id|get_previous_question:question.id %}">Предыдущий вопрос</a>
+        <br>
+    {% endif %}
+    {% if test.id|get_next_question:question.id %}
+        <a href="{% url 'core:questions' test.id test.id|get_next_question:question.id %}">Следующий вопрос</a>
+    {% else %}
+        <a href="{% url 'core:test_result' test.id %}">Завершить тест</a>
+    {% endif %}
+{% endblock %}

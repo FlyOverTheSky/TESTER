@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load tags %}
+{% for test in page_obj %}
+    {% if test.is_active %}
+    <article>
+      <ul>
+        <li>
+          Название: {{ test.title }}
+          <br>
+        </li>
+        <li>
+          Описание: {{ test.description }}
+           <br>
+        </li>
+          <a href="{% url 'core:questions' test.id test.id|get_first_question %}">Пройти тест</a>
+           <br>
+      </ul>
+
+    </article>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endif %}
+    {% endfor %}
+{#    {% include  'posts/includes/paginator.html' %}#}
+{% endblock %}

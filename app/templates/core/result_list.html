@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for result in page_obj %}
+    <article>
+      <ul>
+          <li>
+          Пользователь: {{ result.user.username }}
+          <br>
+        </li>
+        <li>
+          Название: {{ result.id }}
+          <br>
+        </li>
+        <li>
+          Результат: {{ result.total_result }}
+           <br>
+        </li>
+      </ul>
+
+    </article>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+{% endblock %}
